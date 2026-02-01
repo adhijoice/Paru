@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Paru</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #fff5f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .page { display: none; min-height: 100vh; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+        .active { display: flex; animation: fadeIn 1s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .heart { color: #f56565; font-size: 50px; }
+    </style>
+</head>
+<body>
+
+    <div id="page1" class="page active">
+        <h1 class="text-4xl font-bold text-red-500 mb-4">Hai Paru! ❤️</h1>
+        <p class="text-xl text-gray-700 italic">It's your eecha...</p>
+        <p class="text-2xl mt-4 font-semibold">Welcome to the world!</p>
+        <button onclick="nextPage(2)" class="mt-8 bg-red-400 text-white px-6 py-2 rounded-full hover:bg-red-500 transition">Enter My Heart →</button>
+    </div>
+
+    <div id="page2" class="page">
+        <h2 class="text-3xl font-bold text-red-500 mb-6">Love Quiz 📝</h2>
+        <p class="mb-4 text-lg">When did I realize I loved you?</p>
+        <div class="space-y-3">
+            <button onclick="quizCorrect()" class="block w-64 bg-white border-2 border-red-200 p-2 rounded-lg hover:bg-red-50">The moment I saw your smile</button>
+            <button onclick="alert('Try again, Paru!')" class="block w-64 bg-white border-2 border-red-200 p-2 rounded-lg hover:bg-red-50">After the 100th coffee</button>
+            <button onclick="alert('Almost, but the smile won!')" class="block w-64 bg-white border-2 border-red-200 p-2 rounded-lg hover:bg-red-50">It was a secret for years</button>
+        </div>
+        <div id="quiz-next" class="hidden mt-6">
+            <p class="text-green-600 font-bold mb-4">Correct! You know me so well! ❤️</p>
+            <button onclick="nextPage(3)" class="bg-red-400 text-white px-6 py-2 rounded-full">Next: Play a Game →</button>
+        </div>
+    </div>
+
+    <div id="page3" class="page">
+        <h2 class="text-3xl font-bold text-red-500 mb-4">Catch My Love 🎮</h2>
+        <p class="mb-4">Click the heart 5 times to win!</p>
+        <div id="game-container" class="relative w-64 h-64 border-2 border-dashed border-red-200 rounded-lg overflow-hidden">
+            <div id="heart-target" onclick="scorePoint()" class="absolute cursor-pointer select-none" style="top:50%; left:50%; transform:translate(-50%, -50%);">❤️</div>
+        </div>
+        <p class="mt-4">Score: <span id="score">0</span>/5</p>
+        <button id="game-btn" onclick="nextPage(4)" class="hidden mt-4 bg-red-400 text-white px-6 py-2 rounded-full">You Won! Go to Page 4 →</button>
+    </div>
+
+    <div id="page4" class="page">
+        <h2 class="text-3xl font-bold text-red-500 mb-6">Things I Like About You ✨</h2>
+        <div class="grid grid-cols-2 gap-4">
+            <button onclick="this.innerText='Your Kindness'; this.classList.add('bg-red-100')" class="p-4 border rounded-lg">Reveal 1</button>
+            <button onclick="this.innerText='Your Voice'; this.classList.add('bg-red-100')" class="p-4 border rounded-lg">Reveal 2</button>
+            <button onclick="this.innerText='How You Care'; this.classList.add('bg-red-100')" class="p-4 border rounded-lg">Reveal 3</button>
+            <button onclick="this.innerText='Everything!'; this.classList.add('bg-red-100')" class="p-4 border rounded-lg">Reveal 4</button>
+        </div>
+        <button onclick="nextPage(5)" class="mt-10 bg-red-400 text-white px-6 py-2 rounded-full">Final Surprise →</button>
+    </div>
+
+    <div id="page5" class="page">
+        <div class="heart">❤️</div>
+        <h2 class="text-3xl font-bold text-red-500 mb-4">I Love You, Paru</h2>
+        <div class="max-w-md bg-white p-6 rounded-xl shadow-lg border border-red-100">
+            <p class="text-gray-700 leading-relaxed">
+                Paru, you are the best thing that ever happened to me. 
+                Thank you for being in my life. This little website is 
+                just a small way to show how much you mean to me.
+            </p>
+            <p class="mt-4 font-bold text-red-500">- Your Eecha</p>
+        </div>
+        <button onclick="location.reload()" class="mt-8 text-sm text-gray-400 underline">Start Again</button>
+    </div>
+
+    <script>
+        function nextPage(pageNumber) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page' + pageNumber).classList.add('active');
+        }
+
+        function quizCorrect() {
+            document.getElementById('quiz-next').classList.remove('hidden');
+        }
+
+        let score = 0;
+        function scorePoint() {
+            score++;
+            document.getElementById('score').innerText = score;
+            if (score >= 5) {
+                document.getElementById('heart-target').style.display = 'none';
+                document.getElementById('game-btn').classList.remove('hidden');
+            } else {
+                const x = Math.random() * 80 + 10;
+                const y = Math.random() * 80 + 10;
+                const target = document.getElementById('heart-target');
+                target.style.left = x + '%';
+                target.style.top = y + '%';
+            }
+        }
+    </script>
+</body>
+</html>
